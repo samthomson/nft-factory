@@ -4,7 +4,7 @@ based on https://ethereum.org/en/developers/tutorials/how-to-write-and-deploy-an
 
 - install deps in package.json
 - set api url and wallet private key into .env
-- change constructor args in `contracts/MyNFT.sol` to make different NFT name
+- change both constructor args in `contracts/MyNFT.sol` to set the NFT collection name
 - set network name (in two places) in config: `hardhat.config.js`
 - compile `npx hardhat compile`
 - deploy contract `yarn run deploy`
