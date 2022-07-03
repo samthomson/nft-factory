@@ -1,6 +1,7 @@
+import hre from 'hardhat'
 
 async function main() {
-	const MyNFT = await ethers.getContractFactory("MyNFT")
+	const MyNFT = await hre.ethers.getContractFactory("MyNFT")
   
 	// Start deployment, returning a promise that resolves to a contract object
 	const myNFT = await MyNFT.deploy()

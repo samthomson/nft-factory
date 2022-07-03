@@ -7,7 +7,7 @@ based on https://ethereum.org/en/developers/tutorials/how-to-write-and-deploy-an
 - change constructor args in `contracts/MyNFT.sol` to make different NFT name
 - set network name (in two places) in config: `hardhat.config.js`
 - compile `npx hardhat compile`
-- deploy contract `npx hardhat --network goerli run scripts/deploy.js``
+- deploy contract `yarn run deploy`
 	- take the outputted contract address and store in `MINTING_CONTRACT_ADDRESS`
 - making NFTS:
 	- [upload a file to IPFS](https://app.pinata.cloud/)
