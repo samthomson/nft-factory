@@ -24,22 +24,26 @@ const mintNFT = async (tokenURI: string) => {
 	try {
 		const signedTx = await web3.eth.accounts.signTransaction(tx, PRIVATE_KEY)
 		
-		web3.eth.sendSignedTransaction(
-			signedTx.rawTransaction,
-			function (err: Error, hash: string) {
-				if (!err) {
-					console.log(`The hash of your transaction is: ${hash}`)
-				} else {
-					console.log('Something went wrong when submitting your transaction', err)
-				}
-			}
+		const { transactionHash } = await web3.eth.sendSignedTransaction(
+			signedTx.rawTransaction
 		)
+		console.log(`The hash of your transaction is: ${transactionHash}`)
 	}
 	catch (err)  {
 		console.error("failed to sign/mint tx/nft", err)
 	}
-
 }
 
 
-mintNFT(`ipfs://${NFT_METADATA_IPFS_ID}`)
+
+const mintCollection = async () => {
+	const nftMetadatas: string[] = (NFT_METADATA_IPFS_ID || '').split(',')
+
+	for (let i = 0; i < nftMetadatas.length; i++) {
+		const IPFSID = nftMetadatas[i]
+		await mintNFT(`ipfs://${IPFSID}`)
+	}
+}
+
+mintCollection()
+// mintNFT(`ipfs://${NFT_METADATA_IPFS_ID}`)
