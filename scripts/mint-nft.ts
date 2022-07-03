@@ -1,12 +1,12 @@
 require("dotenv").config()
 
-const { API_URL, PUBLIC_KEY, PRIVATE_KEY, MINTING_CONTRACT_ADDRESS, NFT_METADATA_IPFS_ID } = process.env
+const { API_URL, PUBLIC_KEY, PRIVATE_KEY, MINTING_CONTRACT_ADDRESS, MINTING_CONTRACT_ADDRESS_POLYGON, NFT_METADATA_IPFS_ID } = process.env
 
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3")
 const web3 = createAlchemyWeb3(API_URL)
 
 const contract = require('../artifacts/contracts/MyNFT.sol/MyNFT.json')
-const nftContract = new web3.eth.Contract(contract.abi, MINTING_CONTRACT_ADDRESS)
+const nftContract = new web3.eth.Contract(contract.abi, MINTING_CONTRACT_ADDRESS_POLYGON)
 
 const mintNFT = async (tokenURI: string) => {
 
@@ -15,7 +15,7 @@ const mintNFT = async (tokenURI: string) => {
 	//the transaction
 	const tx = {
 	  'from': PUBLIC_KEY,
-	  'to': MINTING_CONTRACT_ADDRESS,
+	  'to': MINTING_CONTRACT_ADDRESS_POLYGON,
 	  'nonce': nonce,
 	  'gas': 500000,
 	  'data': nftContract.methods.mintNFT(PUBLIC_KEY, tokenURI).encodeABI()

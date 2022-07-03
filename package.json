@@ -18,6 +18,7 @@
   "scripts": {
     "compile": "npx hardhat compile",
     "deploy": "npx hardhat --network goerli run scripts/deploy.ts",
+    "deploy-polygon": "npx hardhat --network polygon run scripts/deploy.ts",
     "mint": "ts-node scripts/mint-nft.ts"
   }
 }
