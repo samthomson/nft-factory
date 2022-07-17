@@ -4,6 +4,8 @@ import dotenv from 'dotenv'
 
 import * as Utils from './utils'
 import * as Blockchain from './blockchain'
+import * as Web3Storage from './webstorage'
+import * as NFTMinter from './mint-nft'
 import * as Types from './types'
 import * as Constants from './constants'
 
@@ -49,4 +51,42 @@ const checkBalanceEnoughToMintCollection = async (prospectiveCollection: Types.P
 	}
 }
 
-mintCollection('whatever')
+const createNFT = async (draftNFT: Types.NFTMetadataDraft) => {
+	// upload image 
+	const uid = await Web3Storage.storeLocalFileToWeb3Storage(draftNFT.localFilePath)
+
+	console.log('image uploaded with id:', uid)
+	// create/upload metadata file
+	const { attributes, description, name } = draftNFT
+	const NFTMetadata = {
+		attributes, description, name, image: uid
+	}
+	const nftMetadataID = await Web3Storage.storeNFTMetadataToWeb3Storage(NFTMetadata, draftNFT.nftFileName)
+
+	console.log('nft metadata file uploaded with id:', nftMetadataID)
+
+	// lastly, mint the NFT itself
+	const nftMintTx = await NFTMinter.mintNFT(nftMetadataID)
+
+	console.log(`nft ${nftMintTx ? `minted with tx: ${nftMintTx}` : 'failed to mint...'}`)
+}
+
+// mintCollection('whatever')
+const drafts: Record<number, Types.NFTMetadataDraft> = {
+	7: {
+		attributes: [{trait_type: "Country", value: "Morocco"}],
+		description: "A leather tannery in Fez, northern Morocco.",
+		name: "Fez Tannery, Morocco.",
+		localFilePath: "/home/sam/code/nft-factory/scripts/test-files/7_Fez.png",
+		nftFileName: "nft-metadata-travel-7.json"
+	},
+	9: {
+		attributes: [{trait_type: "Country", value: "Morocco"}],
+		description: "Surf sunset, Morocco.",
+		name: "Surf sunset, Morocco.",
+		localFilePath: "/home/sam/code/nft-factory/scripts/test-files/9_surf_sunset.png",
+		nftFileName: "nft-metadata-travel-9.json"
+	}
+}
+
+createNFT(drafts[9])

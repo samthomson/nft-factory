@@ -10,7 +10,7 @@ const web3 = createAlchemyWeb3(API_URL)
 const contract = require('../artifacts/contracts/MyNFT.sol/MyNFT.json')
 const nftContract = new web3.eth.Contract(contract.abi, MINTING_CONTRACT_ADDRESS_POLYGON)
 
-const mintNFT = async (tokenURI: string) => {
+export const mintNFT = async (tokenURI: string): Promise<string | undefined> => {
 
 	const nonce = await web3.eth.getTransactionCount(PUBLIC_KEY, 'latest'); //get latest nonce
 
@@ -30,7 +30,7 @@ const mintNFT = async (tokenURI: string) => {
 		const { transactionHash } = await web3.eth.sendSignedTransaction(
 			signedTx.rawTransaction
 		)
-		console.log(`The hash of your transaction is: ${transactionHash}`)
+		return transactionHash
 	}
 	catch (err)  {
 		console.error("failed to sign/mint tx/nft", err)
@@ -49,4 +49,4 @@ const mintCollection = async () => {
 }
 
 // mintCollection()
-mintNFT(`https://bafybeibls2mlspjlvff6smuqngxxgbf62j474eog5rck5at6ta4a6pid4m.ipfs.dweb.link/nft-metadata-asilah.json`)
+// mintNFT(`https://bafybeibls2mlspjlvff6smuqngxxgbf62j474eog5rck5at6ta4a6pid4m.ipfs.dweb.link/nft-metadata-asilah.json`)

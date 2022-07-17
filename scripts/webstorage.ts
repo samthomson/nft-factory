@@ -26,17 +26,16 @@ const makeStorageClient = () => {
 
 const getFiles = async (path: string) => {
 	const files = await getFilesFromPath(path)
-	console.log(`read ${files.length} file(s) from ${path}`)
 	return files
 }
 
 const storeFiles = async (files: File[]) => {
 	const client = makeStorageClient()
 	const cid = await client.put(files)
-	console.log('stored files with cid:', cid)
 	return cid
 }
 
+/*
 const testStoreSomeLocalFiles = async () => {
 	const path = './test-files/test'
 	const files = await getFiles(path)
@@ -61,15 +60,14 @@ const testStoreSingleLocalFile = async () => {
 	console.log('stored files with cid:', cid)
 	return cid
 }
-
+*/
 const storeWeb3StorageFile = async (file: File): Promise<CIDString> => {
-
 	const client = makeStorageClient()
 	const cid = await client.put([file])
-	console.log('stored files with cid:', cid)
 	return cid
 }
 
+/*
 const testStoreNFTMetaData = async () => {
 	// draft NFT data
 	const NFTMetadataJson: Types.NFTMetadata = JSON.parse(`{
@@ -84,17 +82,23 @@ const testStoreNFTMetaData = async () => {
 		  "name": "Asilah sunset, Morocco."
 	}`)
 
-	// create nft metadata file
-	const NFTMetadataFile = Buffer.from(JSON.stringify(NFTMetadataJson))
+	// create nft metadata file	
+	await storeNFTMetadataToWeb3Storage(NFTMetadataJson, 'nft-metadata-asilah.json')
+}
+*/
 
-	const cid = await storeWeb3StorageFile(
-		new File ([NFTMetadataFile], 'nft-metadata-asilah.json')
-	)
-	console.log('stored files with cid:', cid)
-	return cid
+export const storeLocalFileToWeb3Storage = async (localPath: string): Promise<string> => {
+	const files = await getFiles(localPath)
+	const client = makeStorageClient()
+	const cid = await client.put(files)
+	return cid.toString()
 }
 
+export const storeNFTMetadataToWeb3Storage = async (NFTMetadata: Types.NFTMetadata, newFileName: string): Promise<string> => {
+	const NFTMetadataFile = Buffer.from(JSON.stringify(NFTMetadata))
 
-// testStoreSomeLocalFiles()
-// testStoreSingleLocalFile()
-testStoreNFTMetaData()
+	const cid = await storeWeb3StorageFile(
+		new File ([NFTMetadataFile], newFileName)
+	)
+	return cid.toString() 
+}
