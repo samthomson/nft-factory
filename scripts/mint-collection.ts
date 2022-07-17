@@ -1,4 +1,7 @@
 import * as Utils from './utils'
+import * as Blockchain from './blockchain'
+import dotenv from 'dotenv';
+dotenv.config()
 
 
 const mintCollection = async (collectionFilePath: string): Promise<void> => {
@@ -6,7 +9,8 @@ const mintCollection = async (collectionFilePath: string): Promise<void> => {
 	Utils.ensureEnvVarsAreNotEmpty(['API_URL', 'PRIVATE_KEY', 'PUBLIC_KEY', 'MINTING_CONTRACT_ADDRESS_POLYGON', 'WEB3STORAGE_API_KEY'])
 	// validate collection
 	// check balance is enough
+	await Blockchain.getMaticBalance()
 	// mint each NFT
 }
 
-mintCollection()
+mintCollection('whatever')
