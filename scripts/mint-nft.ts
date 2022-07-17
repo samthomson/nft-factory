@@ -1,4 +1,4 @@
-require("dotenv").config()
+// require("dotenv").config()
 
 const { API_URL, PUBLIC_KEY, PRIVATE_KEY, MINTING_CONTRACT_ADDRESS, MINTING_CONTRACT_ADDRESS_POLYGON, NFT_METADATA_IPFS_ID } = process.env
 
@@ -45,5 +45,5 @@ const mintCollection = async () => {
 	}
 }
 
-mintCollection()
-// mintNFT(`ipfs://${NFT_METADATA_IPFS_ID}`)
+// mintCollection()
+mintNFT(`https://bafybeieke4vjsnhcca2srya7knusyjyuvm7ynj4otoh3xbcafmcy54g24e.ipfs.dweb.link/nft-metadata-spirit.json`)
