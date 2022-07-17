@@ -89,4 +89,5 @@ const drafts: Record<number, Types.NFTMetadataDraft> = {
 	}
 }
 
-createNFT(drafts[9])
+// createNFT(drafts[9])
+Blockchain.currentGasPrice()

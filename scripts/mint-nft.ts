@@ -21,6 +21,7 @@ export const mintNFT = async (tokenURI: string): Promise<string | undefined> => 
 	  'nonce': nonce,
 	  // todo: split this to gas price and gas limit?
 	  'gas': Constants.GAS_NFT_MINT,
+	  'gasPrice': 29, // 29 gwei?
 	  'data': nftContract.methods.mintNFT(PUBLIC_KEY, tokenURI).encodeABI()
 	}
 
