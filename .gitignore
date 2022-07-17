@@ -3,3 +3,4 @@ cache
 scripts/node_modules
 .env
 nft-seed-data/collections
+scripts/test-files
