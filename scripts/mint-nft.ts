@@ -1,4 +1,6 @@
-// require("dotenv").config()
+import dotenv from 'dotenv'
+dotenv.config()
+import * as Constants from './constants'
 
 const { API_URL, PUBLIC_KEY, PRIVATE_KEY, MINTING_CONTRACT_ADDRESS, MINTING_CONTRACT_ADDRESS_POLYGON, NFT_METADATA_IPFS_ID } = process.env
 
@@ -17,7 +19,8 @@ const mintNFT = async (tokenURI: string) => {
 	  'from': PUBLIC_KEY,
 	  'to': MINTING_CONTRACT_ADDRESS_POLYGON,
 	  'nonce': nonce,
-	  'gas': 500000,
+	  // todo: split this to gas price and gas limit?
+	  'gas': Constants.GAS_NFT_MINT,
 	  'data': nftContract.methods.mintNFT(PUBLIC_KEY, tokenURI).encodeABI()
 	}
 
@@ -46,4 +49,4 @@ const mintCollection = async () => {
 }
 
 // mintCollection()
-mintNFT(`https://bafybeieke4vjsnhcca2srya7knusyjyuvm7ynj4otoh3xbcafmcy54g24e.ipfs.dweb.link/nft-metadata-spirit.json`)
+mintNFT(`https://bafybeibls2mlspjlvff6smuqngxxgbf62j474eog5rck5at6ta4a6pid4m.ipfs.dweb.link/nft-metadata-asilah.json`)
