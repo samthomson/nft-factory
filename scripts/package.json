@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^18.0.5",
     "hardhat": "^2.9.9"
   },
   "dependencies": {
